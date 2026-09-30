@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRICS AgriN — Regenerative Agricultural Intelligence Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d0b;
+      --card-bg: #111815;
+      --card-border: #1e2d26;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.25);
+      --accent-hover: #059669;
+      --gold: #f59e0b;
+      --sky: #06b6d4;
+      --rose: #f43f5e;
+      --text-main: #f0fdf4;
+      --text-muted: #8ca398;
+      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+                  radial-gradient(circle at 85% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 40%),
+                  radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(9, 13, 11, 0.88);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.85rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #10b981, #047857);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .logo-badge svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2.2;
+    }
+
+    .brand-title h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-title span.tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .brand-title p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brics-flag-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+    }
+
+    .lang-selector-box select {
+      background: #111815;
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.38rem 0.65rem;
+      font-size: 0.76rem;
+      font-family: var(--font-sans);
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .lang-selector-box select:hover, .lang-selector-box select:focus {
+      border-color: var(--accent);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: #0d1310;
+      padding: 0.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: #042517;
+      font-weight: 700;
+      box-shadow: 0 2px 10px var(--accent-glow);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 1.75rem 2rem 3rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .node-bar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .node-bar-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .node-selector-group {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .node-selector-group label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .node-chips, .sub-node-chips {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .node-chip, .sub-node-chip {
+      background: #151e19;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .sub-node-chip {
+      font-size: 0.73rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 14px;
+      background: #101914;
+      border-color: #1a2c22;
+    }
+
+    .node-chip:hover, .sub-node-chip:hover {
+      border-color: var(--accent);
+      background: #192720;
+    }
+
+    .node-chip.active, .sub-node-chip.active {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.18);
+    }
+
+    .sub-node-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--card-border);
+      flex-wrap: wrap;
+    }
+
+    .sub-node-row label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--sky);
+      letter-spacing: 0.05em;
+    }
+
+    .node-summary-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: rgba(0,0,0,0.25);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.8; }
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.8rem;
+    }
+
+    .panel-header h2 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .panel-header svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--accent);
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .metric-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .metric-box span.label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .metric-box span.val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+    }
+
+    .metric-box span.sub {
+      font-size: 0.68rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .badge-stress {
+      color: var(--rose) !important;
+    }
+
+    .badge-warn {
+      color: var(--gold) !important;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-select, .form-textarea {
+      background: #0d1411;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 0.6rem 0.8rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #042517;
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: #17241e;
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: #1f3129;
+    }
+
+    .advisory-output {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .advisory-header-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.08));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      padding: 1.2rem;
+    }
+
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
+
+    .advisory-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .advisory-card {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .advisory-card h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .advisory-card ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .advisory-card ul li {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      position: relative;
+      padding-left: 1.1rem;
+    }
+
+    .advisory-card ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0.2rem;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagnostic-layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .diagnostic-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sample-preset-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 0.3rem;
+    }
+
+    .sample-preset-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sample-preset-card:hover {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .sample-preset-card.active {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.15);
+    }
+
+    .sample-thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--card-border);
+    }
+
+    .sample-info h5 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .sample-info p {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .upload-dropzone {
+      border: 2px dashed var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.2);
+      transition: border-color 0.2s;
+    }
+
+    .upload-dropzone:hover {
+      border-color: var(--accent);
+    }
+
+    .upload-dropzone svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .image-preview-box {
+      width: 100%;
+      height: 180px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+      display: none;
+      position: relative;
+    }
+
+    .image-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .diagnosis-result-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .diagnosis-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .severity-badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .severity-critical {
+      background: rgba(244, 63, 94, 0.2);
+      color: var(--rose);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+
+    .severity-high {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--gold);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .severity-moderate {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .public-good-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .model-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .model-card:hover {
+      border-color: rgba(16, 185, 129, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .model-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .model-id-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--sky);
+      background: rgba(6, 182, 212, 0.12);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      border: 1px solid rgba(6, 182, 212, 0.25);
+    }
+
+    .stat-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.15);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      border-top-color: #ffffff;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #111e18;
+      border: 1px solid var(--accent);
+      color: var(--text-main);
+      padding: 0.9rem 1.3rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-canvas"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="logo-badge">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="brand-title">
+        <h1>AgriN <span class="tag">BRICS Public Good</span></h1>
+        <p>Regenerative Agricultural Intelligence & Federated Agro-Advisories</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- FIX 5a: Language Selector -->
+      <div class="lang-selector-box">
+        <select id="language" title="Choose Language">
+          <option value="English">English</option>
+          <option value="Hindi">Hindi (हिंदी)</option>
+          <option value="Tamil">Tamil (தமிழ்)</option>
+          <option value="Telugu">Telugu (తెలుగు)</option>
+          <option value="Bengali">Bengali (বাংলা)</option>
+          <option value="Marathi">Marathi (मराठी)</option>
+          <option value="Punjabi">Punjabi (ਪੰਜਾਬੀ)</option>
+          <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+          <option value="Kannada">Kannada (ಕನ್ನಡ)</option>
+          <option value="Odia">Odia (ଓଡ଼ିଆ)</option>
+        </select>
+      </div>
+
+      <div class="brics-flag-strip">
+        <span title="India">🇮🇳</span>
+        <span title="Brazil">🇧🇷</span>
+        <span title="South Africa">🇿🇦</span>
+        <span title="China">🇨🇳</span>
+        <span title="Russia">🇷🇺</span>
+        <span title="Ethiopia">🇪🇹</span>
+      </div>
+    </div>
+
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="tab-advisory">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Regenerative Advisory
+      </button>
+      <button class="tab-btn" data-tab="tab-diagnostic">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        Disease Diagnostic Lab
+      </button>
+      <button class="tab-btn" data-tab="tab-public-good">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>
+        BRICS Shared Models
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Member Node Selector Bar -->
+    <div class="node-bar-card">
+      <div class="node-bar-top">
+        <div class="node-selector-group">
+          <label>Member Nation:</label>
+          <div class="node-chips" id="node-chips-container">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <div class="node-summary-badge">
+          <div class="pulse-dot"></div>
+          <span id="node-telemetry-status">Sentinel-2 & Landsat Mesh Synchronized</span>
+        </div>
+      </div>
+
+      <!-- FIX 4c: Sub-national Region Selector for India -->
+      <div class="sub-node-row" id="sub-node-chips-container" style="display: none;">
+        <label>Sub-national Region (India Tier-2):</label>
+        <div class="sub-node-chips" id="sub-node-chips">
+          <!-- Populated by JS for India -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 1: REGENERATIVE ADVISORY DASHBOARD -->
+    <div class="tab-content active" id="tab-advisory">
+      <div class="dashboard-layout">
+        <!-- Left Column: Live Telemetry & Farmer Profile -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              Localized Telemetry
+            </h2>
+            <span style="font-size: 0.72rem; color: var(--text-muted);" id="current-node-name">Deccan Node</span>
+          </div>
+
+          <!-- Satellite Remote Sensing -->
+          <div class="metric-row">
+            <div class="metric-box">
+              <span class="label">Canopy NDVI</span>
+              <span class="val" id="telemetry-ndvi">0.42</span>
+              <span class="sub" id="telemetry-ndvi-status">Moderate Vigor</span>
+            </div>
+            <div class="metric-box">
+              <span class="label">Water Index (NDWI)</span>
+              <span class="val" id="telemetry-ndwi">-0.15</span>
+              <span class="sub badge-stress" id="telemetry-ndwi-status">Stress Detected</span>
+            </div>
+          </div>
+
+          <!-- Soil Health Metrics -->
+          <div class="metric-row">
+            <div class="metric-box">
+              <span class="label">Soil Organic Carbon</span>
+              <span class="val" id="telemetry-soc">0.44%</span>
+              <span class="sub badge-warn" id="telemetry-soc-status">Needs Regeneration</span>
+            </div>
+            <div class="metric-box">
+              <span class="label">Soil pH</span>
+              <span class="val" id="telemetry-ph">7.9</span>
+              <span class="sub" id="telemetry-soil-type">Vertisol</span>
+            </div>
+          </div>
+
+          <!-- 7-Day Micro-Climate -->
+          <div class="metric-box" style="gap: 0.4rem;">
+            <span class="label">7-Day Climate & Rain Outlook</span>
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <span class="val" id="telemetry-rain">4.5 mm</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);" id="telemetry-temp">31.8 °C</span>
+            </div>
+            <p style="font-size: 0.73rem; color: var(--text-muted);" id="telemetry-forecast">
+              7-day dry spell ahead with 15% probability of localized showers.
+            </p>
+          </div>
+
+          <!-- Advisory Request Form -->
+          <div style="border-top: 1px solid var(--card-border); padding-top: 0.8rem; display: flex; flex-direction: column; gap: 0.8rem;">
+            <div class="form-group">
+              <label>Target Crop or Multiculture Intent</label>
+              <input type="text" class="form-input" id="input-target-crop" value="Pigeon Pea & Sorghum">
+            </div>
+
+            <div class="metric-row">
+              <div class="form-group">
+                <label>Farm Size (ha)</label>
+                <input type="number" step="0.5" class="form-input" id="input-farm-size" value="2.5">
+              </div>
+              <div class="form-group">
+                <label>Water Access</label>
+                <select class="form-select" id="input-irrigation">
+                  <option value="Rain-fed with farm pond">Rain-fed + Pond</option>
+                  <option value="Purely rain-fed dryland">Rain-fed Dryland</option>
+                  <option value="Solar drip irrigation">Solar Drip</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn-primary" id="btn-generate-advisory">
+              <span id="btn-advisory-spinner" class="spinner" style="display: none;"></span>
+              <span id="btn-advisory-label">Generate Regenerative Advisory</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: AI Regenerative Advisory Output -->
+        <div class="panel advisory-output" id="advisory-result-container">
+          <div class="advisory-header-card">
+            <span class="ai-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Gemini Regenerative Intelligence
+            </span>
+            <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 0.35rem;" id="advisory-exec-title">
+              Optimal Strategy for Deccan Vertisol System
+            </h3>
+            <p style="font-size: 0.84rem; color: #cbd5e1;" id="advisory-exec-summary">
+              Severe hydric stress detected. Prioritize biochar-amended no-till intercropping to shield topsoil from evaporation and lock in subsoil mycorrhizal networks before the next hot spell.
+            </p>
+          </div>
+
+          <div class="advisory-card-grid">
+            <div class="advisory-card">
+              <h4>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Regenerative Crop Sequence
+              </h4>
+              <ul id="advisory-crops-list">
+                <li>Pigeon Pea intercropped with Sorghum in 2:1 spatial geometry for biological nitrogen and root aeration.</li>
+                <li>Sunn hemp cover crop sown into stubble to provide 28 days of ground canopy shading.</li>
+                <li>Chickpea relay planting on residual winter soil moisture.</li>
+              </ul>
+            </div>
+
+            <div class="advisory-card">
+              <h4>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Soil Organic Carbon Actions
+              </h4>
+              <ul id="advisory-soil-actions">
+                <li><strong>Biochar Dressing:</strong> Apply 1.2 t/ha pyrolyzed agricultural residue enriched with liquid bio-fertilizer.</li>
+                <li><strong>No-Till Mulching:</strong> Retain minimum 70% harvest stover surface cover to prevent surface crusting.</li>
+              </ul>
+            </div>
+
+            <div class="advisory-card">
+              <h4>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                Hydric & Climate Defense
+              </h4>
+              <p style="font-size: 0.8rem; color: #cbd5e1;" id="advisory-water-strategy">
+                With evapotranspiration outpacing rainfall, cut furrow dykes every 10 meters to prevent surface sheet runoff during intermittent flash storms.
+              </p>
+            </div>
+
+            <div class="advisory-card">
+              <h4>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-7L10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/></svg>
+                BRICS Federated Model Tie-in
+              </h4>
+              <p style="font-size: 0.8rem; color: #cbd5e1;" id="advisory-brics-tiein">
+                Coupled with Brazil EMBRAPA's Biological Nitrogen Fixation benchmark and South Africa ARC's drought polyculture matrix.
+              </p>
+              <div style="margin-top: 0.4rem;">
+                <span class="stat-pill" id="advisory-carbon-offset">+2.4 tCO2e/ha Offset</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: MULTIMODAL CROP DISEASE DIAGNOSTIC LAB -->
+    <div class="tab-content" id="tab-diagnostic">
+      <div class="diagnostic-layout">
+        <!-- Diagnostic Input Controls -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              Pathogen Scanner
+            </h2>
+            <span style="font-size: 0.72rem; color: var(--text-muted);">Multimodal Vision</span>
+          </div>
+
+          <!-- Curated field samples for quick judge demo -->
+          <div class="form-group">
+            <label>Load Real BRICS Field Case (One-Click Demo):</label>
+            <div class="sample-preset-list" id="sample-preset-container">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- File Upload or Custom Image -->
+          <div class="form-group">
+            <label>Or Upload Leaf / Stem Photo:</label>
+            <div class="upload-dropzone" id="dropzone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+              </svg>
+              <p style="font-size: 0.8rem; color: var(--text-main); font-weight: 600;">Click to browse or drop leaf image</p>
+              <p style="font-size: 0.7rem; color: var(--text-muted);">JPG, PNG up to 10MB</p>
+              <input type="file" id="file-upload" accept="image/*" style="display: none;">
+            </div>
+            <div class="image-preview-box" id="image-preview-box">
+              <img id="image-preview" src="" alt="Selected Leaf">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Observed Symptoms / Progression</label>
+            <textarea class="form-textarea" id="diag-symptoms" placeholder="Describe lesion shapes, discoloration, spore dust, or leaf curl..."></textarea>
+          </div>
+
+          <button class="btn-primary" id="btn-run-diagnosis">
+            <span id="btn-diag-spinner" class="spinner" style="display: none;"></span>
+            <span id="btn-diag-label">Analyze Pathogen & Bio-Remedies</span>
+          </button>
+        </div>
+
+        <!-- Diagnostic Output View -->
+        <div class="diagnosis-result-card" id="diagnosis-result-container">
+          <div class="diagnosis-banner">
+            <div>
+              <span class="ai-badge">AgriN Diagnostic Lab</span>
+              <h3 style="font-size: 1.25rem; font-weight: 800; color: #f0fdf4;" id="diag-pathogen-name">
+                Rice Blast (Magnaporthe oryzae)
+              </h3>
+              <p style="font-size: 0.78rem; color: var(--text-muted);" id="diag-crop-category">
+                Fungal Pathogen • Target Host: Rice / Paddy
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <span class="severity-badge severity-high" id="diag-severity">High Severity</span>
+              <span class="stat-pill" id="diag-confidence">99% Confidence</span>
+            </div>
+          </div>
+
+          <!-- Diagnostic Markers -->
+          <div class="advisory-card" style="background: rgba(0,0,0,0.3);">
+            <h4>Diagnostic Visual Markers Identified</h4>
+            <ul id="diag-markers-list">
+              <li>Spindle-shaped elliptical lesions with gray-ash centers and necrotic brown margins.</li>
+              <li>Confirmed via curated BRICS field library</li>
+            </ul>
+          </div>
+
+          <!-- 100% Regenerative Biological Treatment -->
+          <div class="advisory-card" style="border-color: rgba(16, 185, 129, 0.4);">
+            <h4 style="color: #34d399;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Zero-Toxic Regenerative Treatment (Non-Chemical)
+            </h4>
+            <p style="font-size: 0.85rem; color: #f0fdf4;" id="diag-treatment">
+              Spray fermented cow urine extract (Panchagavya 3%) mixed with Pseudomonas fluorescens bio-agent (10g/L). Avoid excessive synthetic nitrogen fertilizers which induce succulence.
+            </p>
+          </div>
+
+          <!-- Preventive Canopy & Soil Action -->
+          <div class="advisory-card">
+            <h4>Long-Term Soil & Canopy Resilience</h4>
+            <p style="font-size: 0.82rem; color: #cbd5e1;" id="diag-soil-action">
+              Apply silica-rich rice husk ash to strengthen plant cell epidermis against fungal penetrative appressoria.
+            </p>
+          </div>
+
+          <!-- BRICS Indigenous Knowledge Share -->
+          <div class="advisory-card" style="border-color: rgba(245, 158, 11, 0.3);">
+            <h4 style="color: var(--gold);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
+              BRICS Shared Indigenous Agronomy Practice
+            </h4>
+            <p style="font-size: 0.82rem; color: #cbd5e1;" id="diag-brics-note">
+              Origin: India (ICAR / ZBNF Indigenous Protocol). Indigenous sour buttermilk (Lactic acid bacteria) foliar spray combined with cold-pressed neem kernel oil alters fungal host-membrane permeability without chemical runoff.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: BRICS DIGITAL PUBLIC GOOD (FEDERATED MODEL REPOSITORY) -->
+    <div class="tab-content" id="tab-public-good">
+      <div class="public-good-layout">
+        <!-- Headline & Sync Banner -->
+        <div class="node-bar-card" style="background: linear-gradient(135deg, #111a15, #0c1613);">
+          <div>
+            <span class="ai-badge" style="background: rgba(6, 182, 212, 0.2); color: var(--sky);">Digital Public Good Mesh</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 0.3rem;">
+              BRICS Federated Regenerative Agro-Schema Exchange
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); max-width: 750px;">
+              Open-source, machine-interoperable data models enabling farmers and agricultural ministries across India, Brazil, South Africa, China, Russia, and Africa to co-develop climate-proof agronomy.
+            </p>
+          </div>
+          <button class="btn-secondary" id="btn-open-sync-modal" style="border-color: var(--accent); color: var(--accent);">
+            + Publish New Agronomic Model
+          </button>
+        </div>
+
+        <!-- Models Grid -->
+        <div class="models-grid" id="models-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast">Notification message</div>
+
+  <script>
+    // State
+    let bricsNodes = [];
+    let activeCountry = "India";
+    let activeNodeId = "in-deccan";
+    let diseaseCatalog = [];
+    let selectedSample = null;
+    let selectedFile = null;
+
+    // DOM Elements
+    const nodeChipsContainer = document.getElementById("node-chips-container");
+    const subNodeContainer = document.getElementById("sub-node-chips-container");
+    const subNodeChips = document.getElementById("sub-node-chips");
+    const nodeTelemetryStatus = document.getElementById("node-telemetry-status");
+    const currentNodeName = document.getElementById("current-node-name");
+
+    // Telemetry DOM
+    const elNdvi = document.getElementById("telemetry-ndvi");
+    const elNdviStatus = document.getElementById("telemetry-ndvi-status");
+    const elNdwi = document.getElementById("telemetry-ndwi");
+    const elNdwiStatus = document.getElementById("telemetry-ndwi-status");
+    const elSoc = document.getElementById("telemetry-soc");
+    const elSocStatus = document.getElementById("telemetry-soc-status");
+    const elPh = document.getElementById("telemetry-ph");
+    const elSoilType = document.getElementById("telemetry-soil-type");
+    const elRain = document.getElementById("telemetry-rain");
+    const elTemp = document.getElementById("telemetry-temp");
+    const elForecast = document.getElementById("telemetry-forecast");
+
+    // Toast helper
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.style.display = "block";
+      setTimeout(() => { toast.style.display = "none"; }, 3500);
+    }
+
+    // Tab Navigation
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        btn.classList.add("active");
+        const tabId = btn.getAttribute("data-tab");
+        document.getElementById(tabId).classList.add("active");
+      });
+    });
+
+    // Load BRICS Nodes
+    async function initNodes() {
+      try {
+        const res = await fetch("/api/brics-nodes");
+        bricsNodes = await res.json();
+        renderCountryChips();
+        renderSubNodeChips();
+        loadNodeTelemetry(activeNodeId);
+      } catch (err) {
+        console.error("Failed to load nodes", err);
+      }
+    }
+
+    // FIX 4c: Distinct list of sovereign member countries
+    function renderCountryChips() {
+      nodeChipsContainer.innerHTML = "";
+      const countryMap = [
+        { country: "India", flag: "🇮🇳", defaultNodeId: "in-deccan" },
+        { country: "Brazil", flag: "🇧🇷", defaultNodeId: "br-cerrado" },
+        { country: "South Africa", flag: "🇿🇦", defaultNodeId: "za-highveld" },
+        { country: "China", flag: "🇨🇳", defaultNodeId: "cn-yellow-river" },
+        { country: "Russia", flag: "🇷🇺", defaultNodeId: "ru-chernozem" },
+        { country: "Ethiopia", flag: "🇪🇹", defaultNodeId: "et-highlands" }
+      ];
+
+      countryMap.forEach(c => {
+        const chip = document.createElement("button");
+        chip.className = `node-chip ${c.country === activeCountry ? "active" : ""}`;
+        chip.innerHTML = `<span>${c.flag}</span> <span>${c.country}</span>`;
+        chip.addEventListener("click", () => {
+          activeCountry = c.country;
+          activeNodeId = c.defaultNodeId;
+          document.querySelectorAll(".node-chip").forEach(ch => ch.classList.remove("active"));
+          chip.classList.add("active");
+          renderSubNodeChips();
+          loadNodeTelemetry(activeNodeId);
+        });
+        nodeChipsContainer.appendChild(chip);
+      });
+    }
+
+    // FIX 4c: Render sub-national Tier-2 regions for India
+    function renderSubNodeChips() {
+      if (activeCountry === "India") {
+        subNodeContainer.style.display = "flex";
+        subNodeChips.innerHTML = "";
+
+        const indianNodes = bricsNodes.filter(n => n.parent_country === "India" || n.country === "India");
+        indianNodes.forEach(node => {
+          const chip = document.createElement("button");
+          chip.className = `sub-node-chip ${node.id === activeNodeId ? "active" : ""}`;
+          chip.textContent = node.id === "in-deccan" ? "All India (Deccan)" : node.region.split("(")[0].trim();
+          chip.addEventListener("click", () => {
+            activeNodeId = node.id;
+            document.querySelectorAll(".sub-node-chip").forEach(s => s.classList.remove("active"));
+            chip.classList.add("active");
+            loadNodeTelemetry(node.id);
+          });
+          subNodeChips.appendChild(chip);
+        });
+      } else {
+        subNodeContainer.style.display = "none";
+      }
+    }
+
+    // Load Telemetry for selected node
+    async function loadNodeTelemetry(nodeId) {
+      try {
+        const res = await fetch(`/api/satellite-soil-weather/${nodeId}`);
+        const data = await res.json();
+        const n = data.node;
+        const t = data.telemetry;
+
+        currentNodeName.textContent = `${n.country} (${n.region})`;
+        nodeTelemetryStatus.textContent = `${t.satellite.sensor} Active`;
+
+        elNdvi.textContent = t.satellite.ndvi.toFixed(2);
+        elNdviStatus.textContent = t.satellite.ndvi_status;
+        elNdwi.textContent = t.satellite.ndwi.toFixed(2);
+        elNdwiStatus.textContent = t.satellite.ndwi_status;
+        if (t.satellite.ndwi < 0) {
+          elNdwiStatus.className = "sub badge-stress";
+        } else {
+          elNdwiStatus.className = "sub";
+        }
+
+        elSoc.textContent = `${t.soil.organic_carbon_pct}%`;
+        if (t.soil.organic_carbon_pct < 0.8) {
+          elSocStatus.textContent = "Carbon Deficit";
+          elSocStatus.className = "sub badge-warn";
+        } else {
+          elSocStatus.textContent = "Optimal";
+          elSocStatus.className = "sub";
+        }
+
+        elPh.textContent = t.soil.ph;
+        elSoilType.textContent = n.soil_type.split(" ")[0];
+
+        elRain.textContent = `${t.weather.rainfall_7d_mm} mm`;
+        elTemp.textContent = `${t.weather.temp_c} °C`;
+        elForecast.textContent = t.weather.forecast_summary;
+
+        // FIX 3: Ensure input-target-crop is ALWAYS overwritten on node switch
+        document.getElementById("input-target-crop").value = n.primary_crops.slice(0, 2).join(" & ");
+
+        // FIX 2: Clear stale executive synthesis on node switch
+        document.getElementById("advisory-exec-title").textContent = `Awaiting synthesis for ${n.region}`;
+        document.getElementById("advisory-exec-summary").textContent = 'Click "Generate Localized Regenerative Advisory" to synthesize a fresh roadmap for this node.';
+        document.getElementById("advisory-crops-list").innerHTML = "<li>Pending generation.</li>";
+        document.getElementById("advisory-soil-actions").innerHTML = "<li>Pending generation.</li>";
+        document.getElementById("advisory-water-strategy").textContent = "—";
+        document.getElementById("advisory-brics-tiein").textContent = "—";
+        document.getElementById("advisory-carbon-offset").textContent = "—";
+
+      } catch (err) {
+        console.error("Failed to load telemetry", err);
+      }
+    }
+
+    // Generate Regenerative Advisory
+    document.getElementById("btn-generate-advisory").addEventListener("click", async () => {
+      const btn = document.getElementById("btn-generate-advisory");
+      const spinner = document.getElementById("btn-advisory-spinner");
+      const label = document.getElementById("btn-advisory-label");
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+      label.textContent = "Synthesizing Telemetry...";
+
+      const targetCrop = document.getElementById("input-target-crop").value;
+      const farmSize = parseFloat(document.getElementById("input-farm-size").value) || 2.0;
+      const irrigation = document.getElementById("input-irrigation").value;
+      const chosenLang = document.getElementById("language").value;
+
+      try {
+        // FIX 5b: Pass chosen language to advisory request
+        const res = await fetch("/api/recommend-regenerative", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            node_id: activeNodeId,
+            target_crop: targetCrop,
+            farm_size_hectares: farmSize,
+            irrigation_access: irrigation,
+            language: chosenLang
+          })
+        });
+        const data = await res.json();
+        const adv = data.advisory;
+
+        document.getElementById("advisory-exec-title").textContent = `Regenerative Strategy for ${data.node.region}`;
+        document.getElementById("advisory-exec-summary").textContent = adv.executive_summary;
+
+        // Populate crop sequence
+        const cropsList = document.getElementById("advisory-crops-list");
+        cropsList.innerHTML = "";
+        (adv.recommended_crop_rotation || []).forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          cropsList.appendChild(li);
+        });
+
+        // Populate soil actions
+        const soilList = document.getElementById("advisory-soil-actions");
+        soilList.innerHTML = "";
+        (adv.regenerative_soil_actions || []).forEach(item => {
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${item.practice}:</strong> ${item.dosage_or_method} (${item.expected_carbon_gain})`;
+          soilList.appendChild(li);
+        });
+
+        // Water strategy & BRICS match
+        document.getElementById("advisory-water-strategy").textContent = adv.water_and_climate_strategy;
+        document.getElementById("advisory-brics-tiein").textContent = adv.cross_border_brics_model_match;
+        document.getElementById("advisory-carbon-offset").textContent = `+${adv.estimated_carbon_offset_tco2e || 2.4} tCO2e/ha Offset`;
+
+        showToast("✓ Regenerative roadmap synthesized successfully");
+      } catch (err) {
+        showToast("Error synthesizing advisory: " + err.message);
+      } finally {
+        btn.disabled = false;
+        spinner.style.display = "none";
+        label.textContent = "Generate Regenerative Advisory";
+      }
+    });
+
+    // Diagnostic Lab Initialization
+    async function initDiagnosticLab() {
+      try {
+        const res = await fetch("/api/crop-diseases");
+        diseaseCatalog = await res.json();
+        renderSamplePresets();
+        if (diseaseCatalog.length > 0) {
+          selectSample(diseaseCatalog[0]);
+        }
+      } catch (err) {
+        console.error("Failed to load diseases catalog", err);
+      }
+    }
+
+    function renderSamplePresets() {
+      const container = document.getElementById("sample-preset-container");
+      container.innerHTML = "";
+      diseaseCatalog.forEach(d => {
+        const card = document.createElement("div");
+        card.className = "sample-preset-card";
+        card.dataset.id = d.id;
+        card.innerHTML = `
+          <img class="sample-thumb" src="${d.sample_image_url}" alt="${d.crop}">
+          <div class="sample-info">
+            <h5>${d.disease_name}</h5>
+            <p>${d.crop} • ${d.severity} Severity</p>
+          </div>
+        `;
+        card.addEventListener("click", () => selectSample(d));
+        container.appendChild(card);
+      });
+    }
+
+    function selectSample(sample) {
+      selectedSample = sample;
+      selectedFile = null;
+      document.querySelectorAll(".sample-preset-card").forEach(c => {
+        c.classList.toggle("active", c.dataset.id === sample.id);
+      });
+      document.getElementById("diag-symptoms").value = sample.visual_symptoms;
+      const previewBox = document.getElementById("image-preview-box");
+      const previewImg = document.getElementById("image-preview");
+      previewImg.src = sample.sample_image_url;
+      previewBox.style.display = "block";
+    }
+
+    // Image Upload Handling
+    const dropzone = document.getElementById("dropzone");
+    const fileUpload = document.getElementById("file-upload");
+    dropzone.addEventListener("click", () => fileUpload.click());
+
+    fileUpload.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        selectedFile = file;
+        selectedSample = null;
+        document.querySelectorAll(".sample-preset-card").forEach(c => c.classList.remove("active"));
+        const reader = new FileReader();
+        reader.onload = (re) => {
+          const previewBox = document.getElementById("image-preview-box");
+          const previewImg = document.getElementById("image-preview");
+          previewImg.src = re.target.result;
+          previewBox.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Run Diagnosis Button
+    document.getElementById("btn-run-diagnosis").addEventListener("click", async () => {
+      const btn = document.getElementById("btn-run-diagnosis");
+      const spinner = document.getElementById("btn-diag-spinner");
+      const label = document.getElementById("btn-diag-label");
+
+      btn.disabled = true;
+      spinner.style.display = "inline-block";
+      label.textContent = "Classifying Pathogen...";
+
+      const formData = new FormData();
+      const symptoms = document.getElementById("diag-symptoms").value;
+      const chosenLang = document.getElementById("language").value;
+
+      formData.append("symptoms", symptoms);
+      // FIX 5b: Append language to diagnostic FormData
+      formData.append("language", chosenLang);
+
+      if (selectedSample) {
+        formData.append("sample_id", selectedSample.id);
+        formData.append("crop_name", selectedSample.crop);
+      } else {
+        formData.append("crop_name", "Field Crop");
+      }
+
+      if (selectedFile) {
+        formData.append("image", selectedFile);
+      }
+
+      try {
+        const res = await fetch("/api/diagnose-crop", {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+        const d = data.diagnosis;
+
+        document.getElementById("diag-pathogen-name").textContent = d.disease_name;
+        document.getElementById("diag-crop-category").textContent = `${d.pathogen_type} • Host: ${selectedSample ? selectedSample.crop : 'Crop Specimen'}`;
+        document.getElementById("diag-confidence").textContent = `${d.confidence_pct}% Confidence`;
+
+        const sevBadge = document.getElementById("diag-severity");
+        const sevClass = (d.severity_level || "moderate").toLowerCase();
+        sevBadge.textContent = `${d.severity_level} Severity`;
+        sevBadge.className = `severity-badge severity-${sevClass}`;
+
+        // Markers
+        const markersList = document.getElementById("diag-markers-list");
+        markersList.innerHTML = "";
+        (d.diagnostic_markers || []).forEach(m => {
+          const li = document.createElement("li");
+          li.textContent = m;
+          markersList.appendChild(li);
+        });
+
+        document.getElementById("diag-treatment").textContent = d.immediate_regenerative_remedy;
+        document.getElementById("diag-soil-action").textContent = d.preventive_soil_and_canopy_protocol;
+        document.getElementById("diag-brics-note").textContent = d.brics_indigenous_knowledge_note;
+
+        showToast("✓ Pathogen identified; biological remedy prepared");
+      } catch (err) {
+        showToast("Diagnostic error: " + err.message);
+      } finally {
+        btn.disabled = false;
+        spinner.style.display = "none";
+        label.textContent = "Analyze Pathogen & Bio-Remedies";
+      }
+    });
+
+    // Public Good Models Registry
+    async function loadFederatedModels() {
+      try {
+        const res = await fetch("/api/federated-models");
+        const models = await res.json();
+        const container = document.getElementById("models-container");
+        container.innerHTML = "";
+
+        models.forEach(m => {
+          const card = document.createElement("div");
+          card.className = "model-card";
+          card.innerHTML = `
+            <div>
+              <div class="model-badge-row">
+                <span class="model-id-pill">${m.model_id}</span>
+                <span class="stat-pill">${m.carbon_sequestration_potential}</span>
+              </div>
+              <h4 style="font-size: 1.05rem; font-weight: 700; margin: 0.6rem 0 0.3rem; color: #f0fdf4;">${m.title}</h4>
+              <p style="font-size: 0.76rem; color: var(--text-muted); margin-bottom: 0.75rem;">Origin: ${m.origin_country}</p>
+              <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.8rem;">
+                ${(m.applicable_regions || []).map(r => `<span style="font-size: 0.68rem; background: #16241e; border: 1px solid var(--card-border); padding: 0.15rem 0.45rem; border-radius: 4px; color: #94a3b8;">${r}</span>`).join('')}
+              </div>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.78rem; color: #cbd5e1;">
+                ${(m.core_principles || []).map(p => `<li>• ${p}</li>`).join('')}
+              </ul>
+            </div>
+            <div style="border-top: 1px solid var(--card-border); padding-top: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.75rem; color: #34d399; font-weight: 600;">Water Efficiency: ${m.water_efficiency_gain}</span>
+              <button class="btn-secondary" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="showToast('Exported interoperable JSON-LD model ${m.model_id}')">Export Schema</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Failed to load federated models", err);
+      }
+    }
+
+    // Modal / Sync Trigger
+    document.getElementById("btn-open-sync-modal").addEventListener("click", async () => {
+      const title = prompt("Enter Model Title to publish to BRICS network:", "Millet-Cowpea Strip Farming for Drought Buffer");
+      if (!title) return;
+
+      try {
+        const res = await fetch("/api/federated-models/sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: title,
+            origin_country: "India (ICAR) & South Africa (ARC) Joint Protocol",
+            applicable_regions: ["Semi-Arid Drylands", "High Evapotranspiration Zones"],
+            carbon_sequestration_potential: "2.1 tCO2e/ha/year",
+            water_efficiency_gain: "+31%",
+            core_principles: [
+              "Strip-sowing pearl millet and cowpeas in alternating 4-meter swaths",
+              "Microbial seed encrusting with Bacillus consortia to retain rhizospheric moisture"
+            ],
+            soil_recovery_trajectory: "Rebuilds biological soil nitrogen by 35kg/ha without synthetic fertilizers."
+          })
+        });
+        const data = await res.json();
+        showToast("✓ " + data.message);
+        loadFederatedModels();
+      } catch (err) {
+        showToast("Sync error: " + err.message);
+      }
+    });
+
+    // Boot
+    window.addEventListener("DOMContentLoaded", () => {
+      initNodes();
+      initDiagnosticLab();
+      loadFederatedModels();
+    });
+  </script>
+</body>
+</html>

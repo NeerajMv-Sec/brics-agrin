@@ -1,0 +1,282 @@
+{
+  "in-deccan": {
+    "satellite": {
+      "ndvi": 0.42,
+      "ndvi_status": "Moderate Vegetative Vigor",
+      "ndwi": -0.15,
+      "ndwi_status": "Moderate Water Stress Detected",
+      "surface_temperature_c": 34.2,
+      "canopy_cover_pct": 58,
+      "sensor": "Sentinel-2 MultiSpectral + Landsat-9 TIRS"
+    },
+    "soil": {
+      "ph": 7.9,
+      "organic_carbon_pct": 0.44,
+      "nitrogen_kg_ha": 182,
+      "phosphorus_kg_ha": 14,
+      "potassium_kg_ha": 310,
+      "moisture_pct": 19.5,
+      "microbial_activity_score": 52
+    },
+    "weather": {
+      "temp_c": 31.8,
+      "humidity_pct": 46,
+      "forecast_summary": "7-day dry spell ahead with 15% probability of localized showers",
+      "rainfall_7d_mm": 4.5,
+      "wind_kmh": 14.2,
+      "evapotranspiration_mm_day": 5.8
+    }
+  },
+  "in-punjab": {
+    "satellite": {
+      "ndvi": 0.62,
+      "ndvi_status": "Intense Agricultural Canopy",
+      "ndwi": 0.04,
+      "ndwi_status": "Adequate Irrigation Buffer",
+      "surface_temperature_c": 28.4,
+      "canopy_cover_pct": 75,
+      "sensor": "Sentinel-2 MultiSpectral + Landsat-9"
+    },
+    "soil": {
+      "ph": 7.6,
+      "organic_carbon_pct": 0.55,
+      "nitrogen_kg_ha": 140,
+      "phosphorus_kg_ha": 22,
+      "potassium_kg_ha": 280,
+      "moisture_pct": 26.5,
+      "microbial_activity_score": 48
+    },
+    "weather": {
+      "temp_c": 27.5,
+      "humidity_pct": 54,
+      "forecast_summary": "Clear skies with dry northwesterly winds and rising afternoon temperature",
+      "rainfall_7d_mm": 1.2,
+      "wind_kmh": 12.0,
+      "evapotranspiration_mm_day": 5.2
+    }
+  },
+  "in-bengal": {
+    "satellite": {
+      "ndvi": 0.58,
+      "ndvi_status": "Dense Wetland Biomass",
+      "ndwi": 0.22,
+      "ndwi_status": "Saturated Subsoil Hydric Profile",
+      "surface_temperature_c": 30.1,
+      "canopy_cover_pct": 70,
+      "sensor": "Sentinel-2 MultiSpectral + Resourcesat-2"
+    },
+    "soil": {
+      "ph": 6.5,
+      "organic_carbon_pct": 0.88,
+      "nitrogen_kg_ha": 225,
+      "phosphorus_kg_ha": 16,
+      "potassium_kg_ha": 210,
+      "moisture_pct": 34.0,
+      "microbial_activity_score": 72
+    },
+    "weather": {
+      "temp_c": 30.8,
+      "humidity_pct": 82,
+      "forecast_summary": "High humidity with recurring pre-monsoon convective thunderstorms and squalls",
+      "rainfall_7d_mm": 38.5,
+      "wind_kmh": 18.0,
+      "evapotranspiration_mm_day": 4.0
+    }
+  },
+  "in-tamilnadu": {
+    "satellite": {
+      "ndvi": 0.45,
+      "ndvi_status": "Moderate Deltaic Vegetation",
+      "ndwi": -0.10,
+      "ndwi_status": "Marginal Hydric Stress",
+      "surface_temperature_c": 33.6,
+      "canopy_cover_pct": 52,
+      "sensor": "Sentinel-2 MultiSpectral + Cartosat"
+    },
+    "soil": {
+      "ph": 7.2,
+      "organic_carbon_pct": 0.49,
+      "nitrogen_kg_ha": 170,
+      "phosphorus_kg_ha": 15,
+      "potassium_kg_ha": 260,
+      "moisture_pct": 18.2,
+      "microbial_activity_score": 55
+    },
+    "weather": {
+      "temp_c": 33.0,
+      "humidity_pct": 62,
+      "forecast_summary": "Hot and humid maritime breeze with isolated deltaic evening drizzle",
+      "rainfall_7d_mm": 6.0,
+      "wind_kmh": 15.5,
+      "evapotranspiration_mm_day": 5.9
+    }
+  },
+  "in-kerala": {
+    "satellite": {
+      "ndvi": 0.76,
+      "ndvi_status": "High Density Multi-Tier Canopy",
+      "ndwi": 0.31,
+      "ndwi_status": "Abundant Moisture Reservoir",
+      "surface_temperature_c": 27.2,
+      "canopy_cover_pct": 88,
+      "sensor": "Sentinel-2 MultiSpectral + Landsat-8"
+    },
+    "soil": {
+      "ph": 5.3,
+      "organic_carbon_pct": 1.45,
+      "nitrogen_kg_ha": 240,
+      "phosphorus_kg_ha": 7,
+      "potassium_kg_ha": 165,
+      "moisture_pct": 36.8,
+      "microbial_activity_score": 84
+    },
+    "weather": {
+      "temp_c": 27.8,
+      "humidity_pct": 88,
+      "forecast_summary": "Heavy coastal orographic showers with coastal mist and cloud cover",
+      "rainfall_7d_mm": 68.0,
+      "wind_kmh": 11.2,
+      "evapotranspiration_mm_day": 3.4
+    }
+  },
+  "br-cerrado": {
+    "satellite": {
+      "ndvi": 0.68,
+      "ndvi_status": "Vigorous Biomass Density",
+      "ndwi": 0.12,
+      "ndwi_status": "Adequate Moisture Buffer",
+      "surface_temperature_c": 29.5,
+      "canopy_cover_pct": 82,
+      "sensor": "Sentinel-2 MultiSpectral + CBERS-4A"
+    },
+    "soil": {
+      "ph": 5.2,
+      "organic_carbon_pct": 1.25,
+      "nitrogen_kg_ha": 210,
+      "phosphorus_kg_ha": 8,
+      "potassium_kg_ha": 140,
+      "moisture_pct": 28.0,
+      "microbial_activity_score": 71
+    },
+    "weather": {
+      "temp_c": 28.0,
+      "humidity_pct": 74,
+      "forecast_summary": "Scattered convective afternoon thunderstorms; high humidity",
+      "rainfall_7d_mm": 42.0,
+      "wind_kmh": 9.5,
+      "evapotranspiration_mm_day": 4.2
+    }
+  },
+  "za-highveld": {
+    "satellite": {
+      "ndvi": 0.35,
+      "ndvi_status": "Sparse Vegetative Index (Drought Vulnerable)",
+      "ndwi": -0.28,
+      "ndwi_status": "Severe Subsoil Hydric Deficit",
+      "surface_temperature_c": 32.1,
+      "canopy_cover_pct": 39,
+      "sensor": "Sentinel-2 MultiSpectral + MODIS Terra"
+    },
+    "soil": {
+      "ph": 6.3,
+      "organic_carbon_pct": 0.38,
+      "nitrogen_kg_ha": 130,
+      "phosphorus_kg_ha": 11,
+      "potassium_kg_ha": 195,
+      "moisture_pct": 13.2,
+      "microbial_activity_score": 38
+    },
+    "weather": {
+      "temp_c": 29.4,
+      "humidity_pct": 33,
+      "forecast_summary": "Prolonged dry heatwave with strong desorbing gusts",
+      "rainfall_7d_mm": 0.0,
+      "wind_kmh": 22.0,
+      "evapotranspiration_mm_day": 6.9
+    }
+  },
+  "cn-yellow-river": {
+    "satellite": {
+      "ndvi": 0.51,
+      "ndvi_status": "Moderate Canopy Density",
+      "ndwi": -0.05,
+      "ndwi_status": "Marginal Moisture Balance",
+      "surface_temperature_c": 21.0,
+      "canopy_cover_pct": 64,
+      "sensor": "Sentinel-2 MultiSpectral + Gaofen-6"
+    },
+    "soil": {
+      "ph": 8.1,
+      "organic_carbon_pct": 0.72,
+      "nitrogen_kg_ha": 165,
+      "phosphorus_kg_ha": 18,
+      "potassium_kg_ha": 240,
+      "moisture_pct": 22.4,
+      "microbial_activity_score": 60
+    },
+    "weather": {
+      "temp_c": 19.5,
+      "humidity_pct": 52,
+      "forecast_summary": "Cooling front approaching; dry northern breeze with intermittent cloud cover",
+      "rainfall_7d_mm": 8.0,
+      "wind_kmh": 16.0,
+      "evapotranspiration_mm_day": 3.7
+    }
+  },
+  "ru-chernozem": {
+    "satellite": {
+      "ndvi": 0.59,
+      "ndvi_status": "Healthy Early Germination",
+      "ndwi": 0.08,
+      "ndwi_status": "Optimal Soil Satiation",
+      "surface_temperature_c": 17.8,
+      "canopy_cover_pct": 71,
+      "sensor": "Sentinel-2 MultiSpectral + Meteor-M"
+    },
+    "soil": {
+      "ph": 6.8,
+      "organic_carbon_pct": 3.80,
+      "nitrogen_kg_ha": 290,
+      "phosphorus_kg_ha": 35,
+      "potassium_kg_ha": 380,
+      "moisture_pct": 31.5,
+      "microbial_activity_score": 88
+    },
+    "weather": {
+      "temp_c": 16.2,
+      "humidity_pct": 68,
+      "forecast_summary": "Mild continental conditions with light nocturnal frost risk",
+      "rainfall_7d_mm": 18.0,
+      "wind_kmh": 11.0,
+      "evapotranspiration_mm_day": 2.9
+    }
+  },
+  "et-highlands": {
+    "satellite": {
+      "ndvi": 0.48,
+      "ndvi_status": "Moderate Vegetative Cover (Terraced Plots)",
+      "ndwi": -0.02,
+      "ndwi_status": "Equilibrium Moisture",
+      "surface_temperature_c": 23.4,
+      "canopy_cover_pct": 54,
+      "sensor": "Sentinel-2 MultiSpectral + Landsat-8"
+    },
+    "soil": {
+      "ph": 5.8,
+      "organic_carbon_pct": 1.10,
+      "nitrogen_kg_ha": 155,
+      "phosphorus_kg_ha": 9,
+      "potassium_kg_ha": 175,
+      "moisture_pct": 24.1,
+      "microbial_activity_score": 64
+    },
+    "weather": {
+      "temp_c": 22.0,
+      "humidity_pct": 58,
+      "forecast_summary": "Bimodal light Belg rains ending; transition to sunny highland afternoons",
+      "rainfall_7d_mm": 14.0,
+      "wind_kmh": 12.5,
+      "evapotranspiration_mm_day": 4.1
+    }
+  }
+}

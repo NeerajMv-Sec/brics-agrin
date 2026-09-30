@@ -1,0 +1,6 @@
+{
+  "name": "BRICS AgriN — Regenerative Agricultural Intelligence Network",
+  "description": "Interoperable digital public good delivering real-time localized agro-advisories, satellite & soil health telemetry, and crop disease diagnostics across BRICS nations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
